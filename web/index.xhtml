@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Consulta de Saldos</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <fieldset>
+                <legend>CONSULTA DE SALDOS CON JSF Y AJAX LAB 3</legend>
+                CustomerID:
+                <h:inputText value="#{bankingBeanAJAX.customerId}"/><br/>
+                Password:
+                <h:inputSecret value="#{bankingBeanAJAX.password}"/><br/>
+                <h:commandButton value="Mostrar Saldo" action="#{bankingBeanAJAX.showBalance()}">
+                    <f:ajax execute="@form" render="AJAXMessage1"/>
+                </h:commandButton>
+                <br/>
+                <h2><h:outputText value="#{bankingBeanAJAX.message}" id="AJAXMessage1"/></h2>
+            </fieldset>
+
+            <f:view>
+
+                <h:form>
+                    <h1><h:outputText value="Lista de Clientes"/></h1>
+                    <p:dataTable id="dataList" value="#{bankingBeanAJAX.customers}" var="item" widgetVar="customersTable" 
+                                 emptyMessage="No existen datos" 
+                                 filteredValue="#{bankingBeanAJAX.filteredCustomers}" paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos " />
+                                <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" style="width:150px" placeholder="Palabra Clave"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column filterBy="#{item.id}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.firstname}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Firstname"/>
+                            </f:facet>
+                            <h:outputText value="#{item.firstname}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.lastname}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Lastname"/>
+                            </f:facet>
+                            <h:outputText value="#{item.lastname}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.balance}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Balance"/>
+                            </f:facet>
+                            <h:outputText value="#{item.balance}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+
+        </h:form>
+    </h:body>
+</html>
+
