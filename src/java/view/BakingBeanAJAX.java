@@ -6,41 +6,45 @@
 package view;
 
 import entity.Customer;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import session.CustomerFacadeLocal;
 import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author felipe
  */
-public class BakingBeanAJAX extends BakingBeanBase {
-
+@SessionScoped
+public class BakingBeanAJAX extends BakingBeanBase implements Serializable {
+    
     @EJB
     private CustomerFacadeLocal customerFacade;
     private List<Customer> filteredCustomers;
-
+    
     public List<Customer> getFilteredCustomers() {
         return filteredCustomers;
     }
-
+    
     public void setFilteredCustomers(List<Customer> filteredCustomers) {
         this.filteredCustomers = filteredCustomers;
     }
-
+    
     private String message = "";
-
+    
     public String getMessage() {
         return message;
     }
-
+    
     public void setMessage(String message) {
         this.message = message;
     }
-
+    
     public BakingBeanAJAX() {
     }
-
+    
     @Override
     public String showBalance() {
         if (!password.equals("secret")) {
@@ -56,12 +60,12 @@ public class BakingBeanAJAX extends BakingBeanBase {
         }
         return null;
     }
-
+    
     @Override
     public List<Customer> findAll() {
-        List<Customer> lista = null;
+        List<Customer> lista = new ArrayList<>();
         lista = customers = customerFacade.findAll();
         return lista;
     }
-
+    
 }

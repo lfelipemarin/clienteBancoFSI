@@ -26,7 +26,7 @@
 
                 <h:form>
                     <h1><h:outputText value="Lista de Clientes"/></h1>
-                    <p:dataTable id="dataList" value="#{bankingBeanAJAX.customers}" var="item" widgetVar="customersTable" 
+                    <p:dataTable id="dataList" value="#{bankingBeanAJAX.findAll()}" var="item" widgetVar="customersTable" 
                                  emptyMessage="No existen datos" 
                                  filteredValue="#{bankingBeanAJAX.filteredCustomers}" paginator="true"
                                  rowKey="#{item.id}"
